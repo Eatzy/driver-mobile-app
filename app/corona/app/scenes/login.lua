@@ -86,7 +86,7 @@ function scene:create( event )
   	usernameLabel.anchorX = 0.5;
   	usernameLabel.anchorY = 0.5;
   	usernameLabel.x = _CX;
-  	usernameLabel.y = _H*0.09*0.5;
+  	usernameLabel.y = device.safeYOffset + 16;
   	-- usernameLabel.alpha = 0.75;
   	GUI:insert(usernameLabel);
   
