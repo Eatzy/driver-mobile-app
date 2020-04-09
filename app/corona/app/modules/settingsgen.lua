@@ -81,14 +81,14 @@ M.newTab = function (params)
 				installedTSText = appVersion["install_ts"];
 			end
     	end
-    end
+	end
   	
   	local infoKeyText = textmaker.newText("Current Ver: "..tostring(currentVersionText).." ("..tostring(currentTSText)..")",0,0,{"roboto-thin"}, 14);
   	infoKeyText:setFillColor(1.0,1.0,1.0);
   	infoKeyText.anchorX = 0.5;
   	infoKeyText.anchorY = 0.0;
-  	infoKeyText.x = _CX;
-  	infoKeyText.y = 10;
+	infoKeyText.x = _CX;
+	infoKeyText.y = device.safeYOffset + 10;
   	infoGroup:insert(infoKeyText);
   	
   	local installedText = textmaker.newText("Installed Ver: "..tostring(installedVersionText).." ("..tostring(installedTSText)..")",0,0,{"roboto-thin"}, 14);
@@ -200,7 +200,7 @@ M.newTab = function (params)
   	clockoutButtonBg.anchorX = 0.5;
   	clockoutButtonBg.anchorY = 0.5;
   	clockoutButtonBg.x = _CX;
-  	clockoutButtonBg.y = infoGroup.height + sectionsDistance + navButtonHeight*0.5;
+  	clockoutButtonBg.y = infoKeyText.y + infoGroup.height + sectionsDistance + navButtonHeight*0.5;
   	
   	local clockoutButtonText = textmaker.newText(parameters.GRAPHICS.TEXT["clockout"],0,0,{navButtonFontName}, navButtonFontSize);
   	clockoutButtonText:setFillColor(parameters.GRAPHICS.COLORS["button_clockout_text"][1],parameters.GRAPHICS.COLORS["button_clockout_text"][2],parameters.GRAPHICS.COLORS["button_clockout_text"][3]);

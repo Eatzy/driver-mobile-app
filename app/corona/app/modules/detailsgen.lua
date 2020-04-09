@@ -379,7 +379,8 @@ M.newPage = function (params)
   	orderHeaderGroup:insert(orderNextEventCounter);
   	-- orderHeaderGroup:insert(orderTypeTargetIcon);
   	-- orderHeaderGroup:insert(orderTypeASAPIcon);
-  	orderHeaderGroup:insert(orderTypeText);
+	orderHeaderGroup:insert(orderTypeText);
+	orderHeaderGroup.y = device.safeYOffset;
   	
   	GUI:insert(orderHeaderGroup);
   	
@@ -388,7 +389,7 @@ M.newPage = function (params)
   	topGradient.anchorX = 0.5;
   	topGradient.anchorY = 0.0;
   	topGradient.x = _CX;
-  	topGradient.y = 80;
+  	topGradient.y = orderHeaderGroup.y + 80;
   	topGradient.yScale = -1;
   	
   	bottomGradient = display.newImageRect("media/images/icons/gradient.png",_W,16);

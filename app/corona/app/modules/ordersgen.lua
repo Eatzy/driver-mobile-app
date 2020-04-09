@@ -136,7 +136,7 @@ M.newTab = function (params)
   	tabNameText.y = containerHeight*0.1;
   	scrollView:insert(tabNameText);
   	
-  	local ordersContainer = display.newGroup();
+	local ordersContainer = display.newGroup();
   	scrollView:insert(ordersContainer);
   	
   	-- Details block
@@ -695,6 +695,7 @@ M.newTab = function (params)
 				ordersContainer = nil;
 						
 				ordersContainer = display.newGroup();
+				ordersContainer.y = device.safeYOffset;
 				
 				if orders ~= nil then
 					local ordersCount = 0;

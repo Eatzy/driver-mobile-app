@@ -33,4 +33,30 @@ if systemLanguage ~= nil then
 	M.language = systemLanguage;
 end
 
+if M.platform == "ios" then
+	if M.arch == 10 and M.rel == 3 then
+		M.onIPhoneX = true;
+	elseif M.arch == 10 and M.rel == 6 then
+		M.onIPhoneX = true;
+	elseif display.pixelWidth == 1125 and display.pixelHeight == 2436 then
+		M.onIPhoneX = true;
+	else
+		M.onIPhoneX = false;
+	end
+elseif M.platform == "simulator" then
+	if display.pixelWidth == 1125 and display.pixelHeight == 2436 then
+		M.onIPhoneX = true;
+	else
+		M.onIPhoneX = false;
+	end
+else
+	M.onIPhoneX = false;
+end
+
+if M.onIPhoneX == true then
+	M.safeYOffset = 28;
+else
+	M.safeYOffset = 0;
+end
+
 return M;
