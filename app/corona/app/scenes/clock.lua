@@ -229,23 +229,6 @@ function scene:create( event )
 			clockinButtonBg:setFillColor(clockinButtonOverColor[1],clockinButtonOverColor[2],clockinButtonOverColor[3]);
 			logger.log("CLOCKIN BUTTON PRESSED!");
 			analytics.logEvent("clock_clockin_tap");
-			
-			--[[
-			local function onAlert( event )
-				if ( event.action == "clicked" ) then
-					local i = event.index
-					if ( i == 1 ) then
-						-- Do nothing; dialog will simply dismiss
-					elseif ( i == 2 ) then
-						logger.log("Clocking in...");
-						clockButtonPress();
-					end
-				end
-			end
-  
-			-- Show alert with two buttons
-			local alert = native.showAlert( parameters.GRAPHICS.TEXT["clockin_alert_title"], parameters.GRAPHICS.TEXT["clockin_alert_body"], { parameters.GRAPHICS.TEXT["alert_cancel"], parameters.GRAPHICS.TEXT["alert_ok"] }, onAlert );
-			--]]
 			clockButtonPress();
 		end
   	end

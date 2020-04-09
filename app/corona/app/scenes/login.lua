@@ -56,78 +56,6 @@ local function fieldHandler( textField )
 	end
 end
 
--- Default Button Pressed
---[[
-local submitButtonPress = function( event )
-	logger.log("LOGIN BUTTON PRESSED!");
-	native.setKeyboardFocus( nil );
-	
-	if logging ~= true then
-		logger.log("Trying to login...");
-	  	
-	  	local username = usernameField.text;
-	  	local password = passwordField.text;
-	  	
-	  	local validParameters = true;
-	  	if (string.len(username) <= 0) then
-	  		validParameters = false;
-	  	end
-	  	if (string.len(password) <= 0) then
-	  		validParameters = false;
-	  	end
-	  	
-	  	if (validParameters == true) then
-	  		username = string.lower(username);
-	  		password = string.lower(password);
-		
-			-- Calling login
-			local function onLoginResult(data)
-				if data["error"] == true then
-					loader.stop();
-					
-					native.showAlert( "Login Error", data["message"], { "OK" } );
-					logging = false;
-				else
-					contents = data["data"];
-					
-					logger.log("User ID: "..contents["user_id"]);
-					
-					local tokenData = contents["token"];
-					logger.log("Token: "..tostring(tokenData["value"]).." expires: "..tostring(tokenData["expires"]));
-					
-					local configurationData = contents["configuration"];
-					logger.log("GPS period from server: "..tostring(configurationData["gps_period"]).." seconds");
-					logger.log("Order updates period from server: "..tostring(configurationData["order_period"]).." seconds");
-					logger.log("Messages updates period from server: "..tostring(configurationData["messages_period"]).." seconds");
-					logger.log("Target recipient user id: "..tostring(configurationData["recipient_user"]));
-					
-					driverData = contents["driver"];
-					
-					local appConfiguration = storage.getConfiguration();
-					
-					appConfiguration["token"] = tokenData;
-					appConfiguration["configuration"] = configurationData;
-					appConfiguration["user_id"] = contents["user_id"];
-					appConfiguration["driver"] = driverData;
-					
-					storage.saveConfiguration(appConfiguration);
-					
-					logger.log("LOGIN SUCCESS!!!!");
-					userLoginResult = "success";
-				end
-			end
-			
-			loader.start();
-			menunu.driverLogin(username,password,onLoginResult);
-			
-			logging = true;
-		else
-			native.showAlert( "Invalid Login", "Please fill all fields", { "OK" } );
-		end
-	end
-end
---]]
-
 function scene:create( event )
   	local group = self.view;
 
@@ -206,26 +134,6 @@ function scene:create( event )
   	
   	GUI:insert(passwordFieldBg);
   	GUI:insert(passwordField);
-  	
-  	--[[
-  	submitButton = widget.newButton
-	{
-		label = parameters.GRAPHICS.TEXT["login"],
-		labelColor = 
-		{ 
-			default = { parameters.GRAPHICS.COLORS["main_text"][1],parameters.GRAPHICS.COLORS["main_text"][2],parameters.GRAPHICS.COLORS["main_text"][3] },
-			over = { 0, 0, 0 }
-		},
-		fontSize = parameters.GRAPHICS.FONT_BASE_SIZE*2,
-		emboss = true,
-		onPress = submitButtonPress,
-	}
-	submitButton.anchorX = 0.5;
-  	submitButton.anchorY = 0.5;
-  	submitButton.x = passwordLabel.x;
-  	submitButton.y = passwordLabel.y + _H*0.2;
-  	GUI:insert(submitButton);
-  	--]]
   	
   	local loginButtonOverColor = parameters.GRAPHICS.COLORS["button_login_over"];
   	local loginButtonActiveColor = parameters.GRAPHICS.COLORS["button_login_active"];
@@ -342,56 +250,7 @@ function scene:create( event )
   	loginButtonGroup:insert(loginButtonText);
   	loginButtonGroup:insert(loginButtonAction);
   	
-  	--[[
-  	local registerButtonGroup = display.newGroup();
-  	
-  	local registerButtonBg = display.newRoundedRect( 0, 0, navButtonWidth, navButtonHeight, navButtonCorner );
-  	registerButtonBg:setFillColor(registerButtonOverColor[1],registerButtonOverColor[2],registerButtonOverColor[3]);
-  	registerButtonBg.anchorX = 0.5;
-  	registerButtonBg.anchorY = 0.5;
-  	registerButtonBg.x = _CX;
-  	registerButtonBg.y = loginButtonBg.y + navButtonHeight + 8;
-  	
-  	local registerButtonText = textmaker.newText(parameters.GRAPHICS.TEXT["register"],0,0,{navButtonFontName}, navButtonFontSize);
-  	registerButtonText:setFillColor(parameters.GRAPHICS.COLORS["button_login_text"][1],parameters.GRAPHICS.COLORS["button_login_text"][2],parameters.GRAPHICS.COLORS["button_login_text"][3]);
-  	registerButtonText.anchorX = registerButtonBg.anchorX;
-  	registerButtonText.anchorY = registerButtonBg.anchorY;
-  	registerButtonText.x = registerButtonBg.x;
-  	registerButtonText.y = registerButtonBg.y;
-  	
-  	local function onRegister(event)
-  		if ( "began" == event.phase) then
-  			registerButtonBg:setFillColor(registerButtonActiveColor[1],registerButtonActiveColor[2],registerButtonActiveColor[3]);
-		elseif ( "ended" == event.phase ) then
-			registerButtonBg:setFillColor(registerButtonOverColor[1],registerButtonOverColor[2],registerButtonOverColor[3]);
-			
-			logger.log("BECOME A DRIVER BUTTON PRESSED!");
-			
-			-- TODO
-			-- Open internal browser
-		end
-  	end
-  	
-  	local registerButtonAction = widget.newButton {
-		width = navButtonWidth,
-		height = navButtonHeight,
-		label = "",
-		defaultFile = "media/images/transparent.png",
-		overFile = "media/images/transparent.png",
-		onEvent = onRegister
-	};
-	registerButtonAction.anchorX = registerButtonText.anchorX;
-  	registerButtonAction.anchorY = registerButtonText.anchorX;
-  	registerButtonAction.x = registerButtonText.x;
-  	registerButtonAction.y = registerButtonText.y;
-  	
-  	registerButtonGroup:insert(registerButtonBg);
-  	registerButtonGroup:insert(registerButtonText);
-  	registerButtonGroup:insert(registerButtonAction);
-  	--]]
-  	
   	GUI:insert(loginButtonGroup);
-  	-- GUI:insert(registerButtonGroup);
   	
   	local externalLinksGroup = display.newGroup();
   	
