@@ -178,11 +178,3 @@ settings.plugins = {};
 
 settings.plugins["plugin.notifications"] = {};
 settings.plugins["plugin.notifications"].publisherId = "com.coronalabs";
-
-settings.plugins["plugin.google.play.services"] = {};
-settings.plugins["plugin.google.play.services"].publisherId = "com.coronalabs";
-settings.plugins["plugin.google.play.services"].supportedPlatforms = { android = true; };
-
-settings.plugins["shared.google.play.services.gcm"] = {};
-settings.plugins["shared.google.play.services.gcm"].publisherId = "com.coronalabs";
-settings.plugins["shared.google.play.services.gcm"].supportedPlatforms = { android = true; };
