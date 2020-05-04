@@ -179,9 +179,6 @@ settings.plugins = {};
 settings.plugins["plugin.notifications"] = {};
 settings.plugins["plugin.notifications"].publisherId = "com.coronalabs";
 
-settings.plugins["plugin.flurry.analytics"] = {};
-settings.plugins["plugin.flurry.analytics"].publisherId = "com.coronalabs";
-
 settings.plugins["plugin.google.play.services"] = {};
 settings.plugins["plugin.google.play.services"].publisherId = "com.coronalabs";
 settings.plugins["plugin.google.play.services"].supportedPlatforms = { android = true; };

@@ -29,7 +29,7 @@ M.newChat = function (options)
 	local chatMaxBubbleSenderNameLength = 16;
 	
 	local chatManager = {};
-	chatManager.yOffset = 0;
+	chatManager.yOffset = device.safeYOffset;
 	
 	local chatContainer = widget.newScrollView {
 		left = 0,

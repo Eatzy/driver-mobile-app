@@ -177,7 +177,7 @@ if device.platform ~= "simulator" then
 		-- M.SERVER.API_BASE_URL = "http://upcloudapi.eatsy.net/mobile"; -- upcloud
 	end
 else
-	M.SERVER.API_BASE_URL = "http://api.eatsy.local/mobile"; -- local testing
+	M.SERVER.API_BASE_URL = "http://api.eatsy.local:8080/mobile"; -- local testing
 	-- M.SERVER.API_BASE_URL = "https://api.eatsy.net/mobile"; -- development
 	-- M.SERVER.API_BASE_URL = "https://api.eatzy.com/mobile"; -- production
 	-- M.SERVER.API_BASE_URL = "http://upcloudapi.eatsy.net/mobile"; -- upcloud

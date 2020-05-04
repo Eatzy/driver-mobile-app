@@ -131,7 +131,7 @@ function scene:create( event )
   	businessName.anchorX = 0.5;
   	businessName.anchorY = 0.0;
   	businessName.x = _CX;
-  	businessName.y = 20;
+  	businessName.y = device.safeYOffset + 20;
   	GUI:insert(businessName);
   	
   	shiftsContainer = display.newGroup();
@@ -287,7 +287,7 @@ function scene:show( event )
   		if driverShifts ~= nil then
 			shiftsGroup = display.newGroup();
 		
-			local shiftOffset = _H*0.15;
+			local shiftOffset = device.safeYOffset + _H*0.15;
 			for i=1, #driverShifts do
 				local driverShift = driverShifts[i];
 				

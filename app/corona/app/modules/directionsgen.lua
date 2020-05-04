@@ -56,16 +56,6 @@ M.newTab = function (params)
   	backgroundBox.y = 0;
   	Background:insert(backgroundBox);
   	
-  	--[[
-  	local tabNameText = textmaker.newText(parameters.GRAPHICS.TEXT["section_in_progress"],0,0,{"roboto-thin"}, parameters.GRAPHICS.FONT_BASE_SIZE);
-  	tabNameText:setFillColor(parameters.GRAPHICS.COLORS["main_text"][1],parameters.GRAPHICS.COLORS["main_text"][2],parameters.GRAPHICS.COLORS["main_text"][3]);
-  	tabNameText.anchorX = 0.5;
-  	tabNameText.anchorY = 0.5;
-  	tabNameText.x = _CX;
-  	tabNameText.y = containerHeight*0.5;
-  	Foreground:insert(tabNameText);
-  	--]]
-  	
   	local mapView = nil;
   	
   	GUI:insert(loader);
