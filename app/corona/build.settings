@@ -6,7 +6,7 @@ settings.orientation.supported = {};
 settings.orientation.supported[#settings.orientation.supported+1]= "portrait";
 
 settings.android = {};
-settings.android.versionCode = "106005";
+settings.android.versionCode = "107000";
 
 settings.android.permissions = {};
 settings.android.permissions[#settings.android.permissions+1] = { name = ".permission.C2D_MESSAGE", protectionLevel = "signature" };
@@ -38,7 +38,7 @@ settings.iphone.skipPNGCrush = true;
 settings.iphone.plist = {};
 settings.iphone.plist.CFBundleDisplayName = "Drive Eatzy";
 settings.iphone.plist.CFBundleIdentifier = "com.eatzy.driver";
-settings.iphone.plist.CFBundleShortVersionString = "1.6.5";
+settings.iphone.plist.CFBundleShortVersionString = "1.7.0";
 settings.iphone.plist.UIBackgroundModes = {};
 settings.iphone.plist.UIBackgroundModes[#settings.iphone.plist.UIBackgroundModes + 1] = "remote-notification";
 settings.iphone.plist.UIBackgroundModes[#settings.iphone.plist.UIBackgroundModes + 1] = "location";
