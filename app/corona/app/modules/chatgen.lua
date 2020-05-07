@@ -185,10 +185,6 @@ M.newTab = function (params)
   	chatOptions.height = containerHeight - 50;
   	
   	local chatView = chatFactory.newChat(chatOptions);
-  	--[[chatView.anchorX = 0.5;
-  	chatView.anchorY = 0.0;
-  	chatView.x = _CX;
-  	chatView.y = 0;--]]
   	Foreground:insert(chatView);
   	
   	GUI:insert(loader);

@@ -5,6 +5,8 @@ local _H = display.contentHeight;
 local _CX = _W*0.5;
 local _CY = _H*0.5;
 
+local scrollView;
+
 local widget = require( "widget" )
 local detailsGen = require("app.modules.detailsgen")
 
@@ -103,11 +105,9 @@ M.newTab = function (params)
 			orderRequestTimer = timer.performWithDelay( ordersRequestPeriod, orderFuncs.requestOrders, -1 );
 			orderFuncs.requestOrders();
 		end
-
-		return true
   	end
-  	
-  	local scrollView = widget.newScrollView {
+	  
+  	scrollView = widget.newScrollView {
 		left = 0,
 		top = 0,
 		width = containerWidth,
@@ -394,8 +394,10 @@ M.newTab = function (params)
 					end
 				end
 			end
+
+			local blockRoundingRadius = 8;
 			
-			local orderBlockBG = display.newRoundedRect(0,0,blockWidth,blockHeight,8);
+			local orderBlockBG = display.newRoundedRect(0,0,blockWidth,blockHeight,blockRoundingRadius);
 			orderBlockBG:setFillColor(orderColor[1],orderColor[2],orderColor[3]);
 			orderBlockBG.anchorX = 0.5;
 			orderBlockBG.anchorY = 0.0;
@@ -463,6 +465,15 @@ M.newTab = function (params)
 			blockCodeCountdownText.x = orderBlockBG.width*0.5 - 4;
 			blockCodeCountdownText.y = blockCodeOrderNumberText.y;
 			orderBlock:insert(blockCodeCountdownText);
+
+			-- local orderBlockTouchOverlay = display.newRect(0,0,blockWidth-blockRoundingRadius,blockHeight-blockRoundingRadius);
+			--[[local orderBlockTouchOverlay = display.newImageRect("media/images/transparent.png",blockWidth-blockRoundingRadius,blockHeight-blockRoundingRadius);
+			orderBlockTouchOverlay:setFillColor(orderColor[2],orderColor[1],orderColor[5]);
+			orderBlockTouchOverlay.anchorX = orderBlockBG.anchorX;
+			orderBlockTouchOverlay.anchorY = orderBlockBG.anchorY;
+			orderBlockTouchOverlay.x = orderBlockBG.x;
+			orderBlockTouchOverlay.y = orderBlockBG.y+(blockRoundingRadius/2);
+			orderBlock:insert(orderBlockTouchOverlay);--]]
 			
 			-- Countdown block
 			local function updateCountdown(event)
@@ -491,28 +502,7 @@ M.newTab = function (params)
 					min = 999;
 					sec = 59;
 				end
-				
-				--[[
-				local residual = driverDelay;
-				local days = math.floor(residual/(60*60*24));
-				residual = residual - (days*60*60*24);
-				local hours = math.floor(residual/(60*60));
-				
-				residual = residual - (hours*60*60);
-				local minutes = math.min(59, math.floor(residual/60));
-				residual = residual - (minutes*60);
-			
-				local seconds = residual;
-				
-				local nowDate = os.date("*t");
-				if days > 0 then
-					countdownString = string.format("%01d:%02d:%02d:%02d",days,hours,minutes,seconds);
-				else
-					countdownString = string.format("%02d:%02d:%02d",hours,minutes,seconds);
-				end
-				--]]
-				
-				-- countdownString = string.format("%d:%02d",min,sec);
+
 				countdownString = string.format("%d",min);
 				if isLate == true then
 					countdownString = "+" .. countdownString;
@@ -525,6 +515,7 @@ M.newTab = function (params)
 			end
 			updateCountdown();
 			
+			--[[
 			local blockCodeOrderDetailsBtn = nil;
 			local blockCodeOrderDirectionsBtn = nil;
 			
@@ -539,15 +530,36 @@ M.newTab = function (params)
 			}
 			blockCodeOrderDetailsBtn.anchorX = 1.0;
 			blockCodeOrderDetailsBtn.anchorY = 1.0;
-			blockCodeOrderDetailsBtn.x = blockWidth*0.5 - 4;
+			blockCodeOrderDetailsBtn.x = blockWidth*0.5 - (blockRoundingRadius/2);
+
 			if blockCodeOrderDirectionsBtn ~= nil then
 				blockCodeOrderDetailsBtn.y = blockHeight - 44;
 			else
-				blockCodeOrderDetailsBtn.y = blockHeight - 4;
+				blockCodeOrderDetailsBtn.y = blockHeight - (blockRoundingRadius/2);
 			end
 			blockCodeOrderDetailsBtn.infoCode = orderInfoCode;
 			orderBlock:insert(blockCodeOrderDetailsBtn);
-			
+			--]]
+
+
+			-- local blockCodeOrderDetailsBtn = display.newImageRect("media/images/transparent.png",blockWidth-blockRoundingRadius,blockHeight-blockRoundingRadius);
+
+			local blockCodeOrderDetailsBtn = widget.newButton
+			{
+				width = blockWidth-blockRoundingRadius,
+				height = blockHeight-blockRoundingRadius,
+				label = "",
+				defaultFile = "media/images/transparent.png",
+				overFile = "media/images/transparent.png",
+				onEvent = onDetailsListener
+			}
+			blockCodeOrderDetailsBtn.anchorX = orderBlockBG.anchorX;
+			blockCodeOrderDetailsBtn.anchorY = orderBlockBG.anchorY;
+			blockCodeOrderDetailsBtn.x = orderBlockBG.x;
+			blockCodeOrderDetailsBtn.y = orderBlockBG.y+(blockRoundingRadius/2);
+			blockCodeOrderDetailsBtn.infoCode = orderInfoCode;
+			orderBlock:insert(blockCodeOrderDetailsBtn);
+
 			local countDowntimer;
 			local initialized = false;
 			orderBlock.init = function ()
@@ -587,78 +599,96 @@ M.newTab = function (params)
   	end
   	
   	local function onBlockTouch( event )
-  		if event.target ~= nil then
-			local infoCode = event.target.infoCode;
-			logger.log( "Order block pressed: " .. tostring(infoCode) );
-		
-			if infoCode ~= nil and onDetailsAnimation ~= true then
-				-- Show order details web view
-				local blockTransition;
-				local function onBTShowed( obj )
-					if blockTransition ~= nil then
-						transition.cancel(blockTransition);
-						blockTransition = nil;
-					end
-					detailsGroup.enablePanel(true);
-					
-					logger.log( "Details block In Animation completed" );
-				end
-				
-				local function onBTHidden( obj )
-					if blockTransition ~= nil then
-						transition.cancel(blockTransition);
-						blockTransition = nil;
-					end
-					detailsGroup.alpha = 0.0;
-					onDetailsAnimation = false;
-					
-					if navigationGW ~= nil then
-						if navigationGW["show"] ~= nil then
-							local showFunc = navigationGW["show"];
-							showFunc();
-						end
-					end
-					
-					logger.log( "Details block Out Animation completed" );
-				end
-				
-				-- Hide navigation bar
-				if navigationGW ~= nil then
-					if navigationGW["hide"] ~= nil then
-						local hideFunc = navigationGW["hide"];
-						hideFunc();
+		if event.target ~= nil then
+			logger.log(event.phase)
+
+			if (event.phase == "moved") then
+				if scrollView ~= nil then
+					local dy = math.abs( ( event.y - event.yStart ) )
+					-- If the touch on the button has moved more than 10 pixels,
+					-- pass focus back to the scroll view so it can continue scrolling
+					if ( dy > 10 ) then
+						scrollView:takeFocus( event )
 					end
 				end
-				
-				local function detailsCB(event)
-					if event ~= nil then
-						if event.phase == "will" then
-							detailsGroup.enablePanel(false);
-							blockTransition = transition.to( detailsGroup, { time=250, x=_W, transition=easing.outExpo, onComplete=onBTHidden } );
-							
-							-- Refresh delivery runs
-							logger.log("Refreshing orders list");
-							loader.start();
+			elseif (event.phase == "ended") then
+				local infoCode = event.target.infoCode;
+				logger.log( "Order block pressed: " .. tostring(infoCode) );
 			
-							if orderRequestTimer ~= nil then
-								timer.cancel(orderRequestTimer);
-								orderRequestTimer = nil;
+				if infoCode ~= nil and onDetailsAnimation ~= true then
+					-- Show order details web view
+					local blockTransition;
+					local function onBTShowed( obj )
+						if blockTransition ~= nil then
+							transition.cancel(blockTransition);
+							blockTransition = nil;
+						end
+						detailsGroup.enablePanel(true);
+						
+						logger.log( "Details block In Animation completed" );
+					end
+					
+					local function onBTHidden( obj )
+						if blockTransition ~= nil then
+							transition.cancel(blockTransition);
+							blockTransition = nil;
+						end
+						detailsGroup.alpha = 0.0;
+						onDetailsAnimation = false;
+						
+						if navigationGW ~= nil then
+							if navigationGW["show"] ~= nil then
+								local showFunc = navigationGW["show"];
+								showFunc();
 							end
-							orderRequestTimer = timer.performWithDelay( ordersRequestPeriod, orderFuncs.requestOrders, -1 );
-							orderFuncs.requestOrders();
-						else
-							logger.log("event.phase unknown: "..tostring(event.phase));
+						end
+						
+						logger.log( "Details block Out Animation completed" );
+					end
+					
+					-- Hide navigation bar
+					if navigationGW ~= nil then
+						if navigationGW["hide"] ~= nil then
+							local hideFunc = navigationGW["hide"];
+							hideFunc();
 						end
 					end
-				end
+					
+					local function detailsCB(event)
+						if event ~= nil then
+							if event.phase == "will" then
+								detailsGroup.enablePanel(false);
+								blockTransition = transition.to( detailsGroup, { time=250, x=_W, transition=easing.outExpo, onComplete=onBTHidden } );
+								
+								-- Refresh delivery runs
+								logger.log("Refreshing orders list");
+								loader.start();
 				
-				detailsGroup.setCallback(detailsCB);
-				detailsGroup.setOrderData(currentRuns[infoCode]);
-				detailsGroup.alpha = 1.0;
-				blockTransition = transition.to( detailsGroup, { time=250, x=0, transition=easing.outExpo, onComplete=onBTShowed } );
-			
-				onDetailsAnimation = true;
+								if orderRequestTimer ~= nil then
+									timer.cancel(orderRequestTimer);
+									orderRequestTimer = nil;
+								end
+								orderRequestTimer = timer.performWithDelay( ordersRequestPeriod, orderFuncs.requestOrders, -1 );
+								orderFuncs.requestOrders();
+							else
+								logger.log("event.phase unknown: "..tostring(event.phase));
+							end
+						end
+					end
+					
+					detailsGroup.setCallback(detailsCB);
+					detailsGroup.setOrderData(currentRuns[infoCode]);
+					detailsGroup.alpha = 1.0;
+					blockTransition = transition.to( detailsGroup, { time=250, x=0, transition=easing.outExpo, onComplete=onBTShowed } );
+				
+					onDetailsAnimation = true;
+				end
+
 			end
+
+			return true;
+		else
+			logger.log("event.target is null");
 		end
 	end
   	

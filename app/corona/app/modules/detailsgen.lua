@@ -138,7 +138,7 @@ M.newPage = function (params)
   	backButtonBg.anchorX = 0.5;
   	backButtonBg.anchorY = 1.0;
   	backButtonBg.x = _CX;
-  	backButtonBg.y = containerHeight - 6;
+  	backButtonBg.y = containerHeight - 16;
   	
   	local backButtonText = textmaker.newText(parameters.GRAPHICS.TEXT["back"],0,0,{navButtonFontName}, navButtonFontSize);
   	backButtonText:setFillColor(parameters.GRAPHICS.COLORS["button_navigation_text"][1],parameters.GRAPHICS.COLORS["button_navigation_text"][2],parameters.GRAPHICS.COLORS["button_navigation_text"][3]);
@@ -192,7 +192,7 @@ M.newPage = function (params)
   	actionButtonBg.anchorX = 0.5;
   	actionButtonBg.anchorY = 1.0;
   	actionButtonBg.x = backButtonBg.x;
-  	actionButtonBg.y = backButtonBg.y - navButtonHeight - (containerHeight - backButtonBg.y);
+  	actionButtonBg.y = backButtonBg.y - navButtonHeight - 8;
   	
   	actionButtonText = textmaker.newText("Action",0,0,{navButtonFontName}, navButtonFontSize);
   	actionButtonText:setFillColor(actionButtonTextColor[1],actionButtonTextColor[2],actionButtonTextColor[3]);
@@ -289,26 +289,6 @@ M.newPage = function (params)
   	actionButtonGroup.alpha = 0.0;
   	
   	local orderHeaderGroup = display.newGroup();
-  	
-  	--[[
-  	local otIS = 32;
-  	
-  	orderTypeTargetIcon = display.newImageRect("media/images/icons/target.png",otIS,otIS);
-  	orderTypeTargetIcon:setFillColor(mainTextColor[1],mainTextColor[2],mainTextColor[3]);
-  	orderTypeTargetIcon.anchorX = 0.0;
-  	orderTypeTargetIcon.anchorY = 0.0;
-  	orderTypeTargetIcon.x = 4;
-  	orderTypeTargetIcon.y = 4;
-  	orderTypeTargetIcon.alpha = 0.0;
-  	
-  	orderTypeASAPIcon = display.newImageRect("media/images/icons/clock.png",otIS,otIS);
-  	orderTypeASAPIcon:setFillColor(mainTextColor[1],mainTextColor[2],mainTextColor[3]);
-  	orderTypeASAPIcon.anchorX = orderTypeTargetIcon.anchorX;
-  	orderTypeASAPIcon.anchorY = orderTypeTargetIcon.anchorY;
-  	orderTypeASAPIcon.x = 4;
-  	orderTypeASAPIcon.y = 4;
-  	orderTypeASAPIcon.alpha = 0.0;
-  	--]]
   	
   	orderNumberText = textmaker.newText("Unknown",0,0,{"roboto-black"}, parameters.GRAPHICS.FONT_BASE_SIZE*1.5);
   	orderNumberText:setFillColor(mainTextColor[1],mainTextColor[2],mainTextColor[3]);
@@ -450,62 +430,6 @@ M.newPage = function (params)
   	scrollView.x = 0;
   	scrollView.y = topGradient.y - topGradient.height + 1;
 	orderMainGroup:insert(scrollView);
-	
-	--[[
-	summaryGroup = display.newGroup();
-	
-	orderNumberText = textmaker.newText("Order unknown",0,0,{"roboto-bold"}, parameters.GRAPHICS.FONT_BASE_SIZE*1.5);
-  	orderNumberText:setFillColor(mainTextColor[1],mainTextColor[2],mainTextColor[3]);
-  	orderNumberText.anchorX = 0.0;
-  	orderNumberText.anchorY = 0.0;
-  	orderNumberText.x = 4;
-  	orderNumberText.y = 10;
-  	
-  	summaryGroup:insert(orderNumberText);
-  	--]]
-  	
-  	--[[
-  	orderPoNumberText = textmaker.newText("Unknown po number",0,0,{"roboto-bold"}, parameters.GRAPHICS.FONT_BASE_SIZE*1.2);
-  	orderPoNumberText:setFillColor(mainTextColor[1],mainTextColor[2],mainTextColor[3]);
-  	orderPoNumberText.anchorX = 0.0;
-  	orderPoNumberText.anchorY = 0.0;
-  	orderPoNumberText.x = 4;
-  	orderPoNumberText.y = 10;
-  	
-  	summaryGroup:insert(orderPoNumberText);
-  	--]]
-  	
-  	--[[
-  	orderTypeText = textmaker.newText("TARGET",0,0,{"roboto-bold"}, parameters.GRAPHICS.FONT_BASE_SIZE*1.5);
-  	orderTypeText:setFillColor(mainTextColor[1],mainTextColor[2],mainTextColor[3]);
-  	orderTypeText.anchorX = 0.0;
-  	orderTypeText.anchorY = 0.0;
-  	orderTypeText.x = orderPoNumberText.x;
-  	orderTypeText.y = orderPoNumberText.y + orderPoNumberText.height;
-  	
-  	summaryGroup:insert(orderTypeText);
-  	
-  	orderTypeTargetIcon = display.newImageRect("media/images/icons/target.png",64,64);
-  	orderTypeTargetIcon:setFillColor(mainTextColor[1],mainTextColor[2],mainTextColor[3]);
-  	orderTypeTargetIcon.anchorX = 1.0;
-  	orderTypeTargetIcon.anchorY = 0.0;
-  	orderTypeTargetIcon.x = containerWidth - orderPoNumberText.x;
-  	orderTypeTargetIcon.y = orderPoNumberText.y;
-  	orderTypeTargetIcon.alpha = 0.0;
-  	
-  	orderTypeASAPIcon = display.newImageRect("media/images/icons/clock.png",64,64);
-  	orderTypeASAPIcon:setFillColor(mainTextColor[1],mainTextColor[2],mainTextColor[3]);
-  	orderTypeASAPIcon.anchorX = orderTypeTargetIcon.anchorX;
-  	orderTypeASAPIcon.anchorY = orderTypeTargetIcon.anchorY;
-  	orderTypeASAPIcon.x = orderTypeTargetIcon.x;
-  	orderTypeASAPIcon.y = orderTypeTargetIcon.y;
-  	orderTypeASAPIcon.alpha = 0.0;
-  	
-  	summaryGroup:insert(orderTypeTargetIcon);
-  	summaryGroup:insert(orderTypeASAPIcon);
-  	
-  	scrollView:insert(summaryGroup);
-  	--]]
   	
   	roadmapGroup = display.newGroup();
   	
@@ -645,7 +569,7 @@ M.newPage = function (params)
   	roadmapGroup:insert(orderDropoffMinuteIcon);
   	
   	-- Pickup Info Objects
-  	pickupTimeText = textmaker.newText("Unknown",0,0,{"roboto-bold"}, parameters.GRAPHICS.FONT_BASE_SIZE*1.5);
+  	pickupTimeText = textmaker.newText("??:?? ??",0,0,{"roboto-bold"}, parameters.GRAPHICS.FONT_BASE_SIZE*1.5);
   	pickupTimeText:setFillColor(mainTextColor[1],mainTextColor[2],mainTextColor[3]);
   	pickupTimeText.anchorX = 1.0;
   	pickupTimeText.anchorY = 0.0;
@@ -822,7 +746,7 @@ M.newPage = function (params)
   	roadmapGroup:insert(pickupButtonsGroup);
   	
   	-- Dropoff Info Objects
-  	dropoffTimeText = textmaker.newText("Unknown",0,0,{"roboto-bold"}, parameters.GRAPHICS.FONT_BASE_SIZE*1.5);
+  	dropoffTimeText = textmaker.newText("??:?? ??",0,0,{"roboto-bold"}, parameters.GRAPHICS.FONT_BASE_SIZE*1.5);
   	dropoffTimeText:setFillColor(mainTextColor[1],mainTextColor[2],mainTextColor[3]);
   	dropoffTimeText.anchorX = 0.0;
   	dropoffTimeText.anchorY = 0.0;
@@ -1332,7 +1256,7 @@ M.newPage = function (params)
 		pickupDetailsGroup:insert(pickupNameText);
 		pDataOffset = pDataOffset + pickupNameText.height*0.85;
 		
-		local pickupAddressAText = textmaker.newText("Unknown",0,0,{"roboto-regular"}, parameters.GRAPHICS.FONT_BASE_SIZE);
+		local pickupAddressAText = textmaker.newText("Unknown",0,0,{"roboto-bold"}, parameters.GRAPHICS.FONT_BASE_SIZE);
 		pickupAddressAText:setFillColor(mainTextColor[1],mainTextColor[2],mainTextColor[3]);
 		pickupAddressAText.anchorX = pickupTimeText.anchorX;
 		pickupAddressAText.anchorY = pickupTimeText.anchorY;
@@ -1352,7 +1276,7 @@ M.newPage = function (params)
 		pickupDetailsGroup:insert(pickupAddressAText);
 		pDataOffset = pDataOffset + pickupAddressAText.height*0.85;
 		
-		local pickupAddressBText = textmaker.newText("Unknown",0,0,{"roboto-regular"}, parameters.GRAPHICS.FONT_BASE_SIZE);
+		local pickupAddressBText = textmaker.newText("Unknown",0,0,{"roboto-bold"}, parameters.GRAPHICS.FONT_BASE_SIZE);
 		pickupAddressBText:setFillColor(mainTextColor[1],mainTextColor[2],mainTextColor[3]);
 		pickupAddressBText.anchorX = pickupTimeText.anchorX;
 		pickupAddressBText.anchorY = pickupTimeText.anchorY;
@@ -1372,7 +1296,7 @@ M.newPage = function (params)
 		pickupDetailsGroup:insert(pickupAddressBText);
 		pDataOffset = pDataOffset + pickupAddressBText.height*0.85;
 	
-		local pickupPhoneNumberText = textmaker.newText("Unknown",0,0,{"roboto-regular"}, parameters.GRAPHICS.FONT_BASE_SIZE);
+		local pickupPhoneNumberText = textmaker.newText("Unknown",0,0,{"roboto-bold"}, parameters.GRAPHICS.FONT_BASE_SIZE);
 		pickupPhoneNumberText:setFillColor(mainTextColor[1],mainTextColor[2],mainTextColor[3]);
 		pickupPhoneNumberText.anchorX = pickupTimeText.anchorX;
 		pickupPhoneNumberText.anchorY = pickupTimeText.anchorY;
@@ -1385,15 +1309,15 @@ M.newPage = function (params)
 		end
 		pickupPhoneNumberText.setNumber(orderRestaurant["phone"]);
 		pickupDetailsGroup:insert(pickupPhoneNumberText);
-		pDataOffset = pDataOffset + pickupPhoneNumberText.height*0.85;
+		pDataOffset = pDataOffset + pickupPhoneNumberText.height;
 		
 		if orderRestaurant["notes"] ~= nil and string.len(orderRestaurant["notes"]) > 0 then
 			pDataOffset = pDataOffset + 6;
 			
 			local restaurantNotes = orderRestaurant["notes"];
 			
-			local pickupNoteLineText = textmaker.newText(restaurantNotes,0,0,{"roboto-thin-italic"}, parameters.GRAPHICS.FONT_BASE_SIZE*0.75, containerWidth - dropoffTimeText.x, 0, "right");
-			pickupNoteLineText:setFillColor(mainTextColor[1],mainTextColor[2],mainTextColor[3]);
+			local pickupNoteLineText = textmaker.newText(restaurantNotes,0,0,{"roboto-medium"}, parameters.GRAPHICS.FONT_BASE_SIZE, containerWidth - dropoffTimeText.x, 0, "right");
+			pickupNoteLineText:setFillColor((255/255),(255/255),(200/255));
 			pickupNoteLineText.anchorX = pickupTimeText.anchorX;
 			pickupNoteLineText.anchorY = pickupTimeText.anchorY;
 			pickupNoteLineText.x = pickupTimeText.x;
@@ -1434,7 +1358,7 @@ M.newPage = function (params)
 		dropoffDetailsGroup:insert(dropoffNameText);
 		dDataOffset = dDataOffset + dropoffNameText.height*0.85;
 		
-		local dropoffAddressAText = textmaker.newText("Unknown",0,0,{"roboto-regular"}, parameters.GRAPHICS.FONT_BASE_SIZE);
+		local dropoffAddressAText = textmaker.newText("Unknown",0,0,{"roboto-bold"}, parameters.GRAPHICS.FONT_BASE_SIZE);
 		dropoffAddressAText:setFillColor(mainTextColor[1],mainTextColor[2],mainTextColor[3]);
 		dropoffAddressAText.anchorX = dropoffTimeText.anchorX;
 		dropoffAddressAText.anchorY = dropoffTimeText.anchorY;
@@ -1455,7 +1379,7 @@ M.newPage = function (params)
 		dDataOffset = dDataOffset + dropoffAddressAText.height*0.85;
 		
 		if orderDropoffAddress["alternative_address"] ~= nil then
-			local dropoffAddressAdditionalText = textmaker.newText("Unknown",0,0,{"roboto-regular"}, parameters.GRAPHICS.FONT_BASE_SIZE);
+			local dropoffAddressAdditionalText = textmaker.newText("Unknown",0,0,{"roboto-bold"}, parameters.GRAPHICS.FONT_BASE_SIZE);
 			dropoffAddressAdditionalText:setFillColor(mainTextColor[1],mainTextColor[2],mainTextColor[3]);
 			dropoffAddressAdditionalText.anchorX = dropoffTimeText.anchorX;
 			dropoffAddressAdditionalText.anchorY = dropoffTimeText.anchorY;
@@ -1476,7 +1400,7 @@ M.newPage = function (params)
 			dDataOffset = dDataOffset + dropoffAddressAdditionalText.height*0.85;
 		end
 		
-		local dropoffAddressBText = textmaker.newText("Unknown",0,0,{"roboto-regular"}, parameters.GRAPHICS.FONT_BASE_SIZE);
+		local dropoffAddressBText = textmaker.newText("Unknown",0,0,{"roboto-bold"}, parameters.GRAPHICS.FONT_BASE_SIZE);
 		dropoffAddressBText:setFillColor(mainTextColor[1],mainTextColor[2],mainTextColor[3]);
 		dropoffAddressBText.anchorX = dropoffTimeText.anchorX;
 		dropoffAddressBText.anchorY = dropoffTimeText.anchorY;
@@ -1496,7 +1420,7 @@ M.newPage = function (params)
 		dropoffDetailsGroup:insert(dropoffAddressBText);
 		dDataOffset = dDataOffset + dropoffAddressBText.height*0.85;
 	
-		local dropoffPhoneNumberText = textmaker.newText("Unknown",0,0,{"roboto-regular"}, parameters.GRAPHICS.FONT_BASE_SIZE);
+		local dropoffPhoneNumberText = textmaker.newText("Unknown",0,0,{"roboto-bold"}, parameters.GRAPHICS.FONT_BASE_SIZE);
 		dropoffPhoneNumberText:setFillColor(mainTextColor[1],mainTextColor[2],mainTextColor[3]);
 		dropoffPhoneNumberText.anchorX = dropoffTimeText.anchorX;
 		dropoffPhoneNumberText.anchorY = dropoffTimeText.anchorY;
@@ -1509,15 +1433,15 @@ M.newPage = function (params)
 		end
 		dropoffPhoneNumberText.setNumber(orderCustomer["phone"]);
 		dropoffDetailsGroup:insert(dropoffPhoneNumberText);
-		dDataOffset = dDataOffset + dropoffPhoneNumberText.height*0.85;
+		dDataOffset = dDataOffset + dropoffPhoneNumberText.height;
 		
 		if orderDropoffAddress["notes"] ~= nil and string.len(orderDropoffAddress["notes"]) > 0 then
 			dDataOffset = dDataOffset + 6;
 			
 			local addressNotes = orderDropoffAddress["notes"];
 			
-			local addressNoteLineText = textmaker.newText(addressNotes,0,0,{"roboto-thin-italic"}, parameters.GRAPHICS.FONT_BASE_SIZE*0.75, (containerWidth - dropoffTimeText.x - 4), 0, "left");
-			addressNoteLineText:setFillColor(mainTextColor[1],mainTextColor[2],mainTextColor[3]);
+			local addressNoteLineText = textmaker.newText(addressNotes,0,0,{"roboto-medium"}, parameters.GRAPHICS.FONT_BASE_SIZE, (containerWidth - dropoffTimeText.x - 4), 0, "left");
+			addressNoteLineText:setFillColor((255/255),(255/255),(200/255));
 			addressNoteLineText.anchorX = dropoffTimeText.anchorX;
 			addressNoteLineText.anchorY = dropoffTimeText.anchorY;
 			addressNoteLineText.x = dropoffTimeText.x;
@@ -1531,8 +1455,8 @@ M.newPage = function (params)
 			
 			local customerNotes = orderCustomer["notes"];
 			
-			local customerNoteLineText = textmaker.newText(customerNotes,0,0,{"roboto-thin-italic"}, parameters.GRAPHICS.FONT_BASE_SIZE*0.75, (containerWidth - dropoffTimeText.x - 4), 0, "left");
-			customerNoteLineText:setFillColor(mainTextColor[1],mainTextColor[2],mainTextColor[3]);
+			local customerNoteLineText = textmaker.newText(customerNotes,0,0,{"roboto-medium"}, parameters.GRAPHICS.FONT_BASE_SIZE, (containerWidth - dropoffTimeText.x - 4), 0, "left");
+			customerNoteLineText:setFillColor((255/255),(255/255),(200/255));
 			customerNoteLineText.anchorX = dropoffTimeText.anchorX;
 			customerNoteLineText.anchorY = dropoffTimeText.anchorY;
 			customerNoteLineText.x = dropoffTimeText.x;

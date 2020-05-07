@@ -40,13 +40,15 @@ M.newBar = function (params)
 	local buttons = params.buttons;
 	local barWidth = params.width;
 	local barHeight = params.height;
+	local buttonYOff = -barHeight*0.5;
 	local notifications = params.notifications;
 
 	local bottomBarContainer = display.newGroup();
 	
-	local transparentBackground = display.newImageRect("media/images/transparent.png",barWidth,barHeight);
-	--local transparentBackground = display.newRect(0,0,barWidth,barHeight);
-	--transparentBackground:setFillColor(parameters.GRAPHICS.COLORS["main_text"][1],parameters.GRAPHICS.COLORS["main_text"][2],parameters.GRAPHICS.COLORS["main_text"][3]);
+	-- local transparentBackground = display.newImageRect("media/images/transparent.png",barWidth,barHeight);
+	local transparentBackground = display.newRect(0,0,barWidth,barHeight);
+	transparentBackground:setFillColor(0,0,0);
+	transparentBackground.alpha = 0.25;
 	transparentBackground.anchorX = 0.5;
 	transparentBackground.anchorY = 1.0;
 	transparentBackground.x = 0;
@@ -69,7 +71,7 @@ M.newBar = function (params)
 		buttonDefaultImage.anchorX = 0.5;
 		buttonDefaultImage.anchorY = 0.5;
 		buttonDefaultImage.x = (i-0.5)*widthStep - barWidth*0.5;
-		buttonDefaultImage.y = -barHeight*0.5;
+		buttonDefaultImage.y = buttonYOff;
 		buttonDefaultImage.default_alpha = buttonDesc["default"]["alpha"];
 		buttonDefaultImage.alpha = buttonDesc["default"]["alpha"];
 		buttonGroup:insert(buttonDefaultImage);
@@ -107,7 +109,7 @@ M.newBar = function (params)
 						animationTransition = nil;
 						
 						buttonDefaultImage.x = (i-0.5)*widthStep - barWidth*0.5;
-						buttonDefaultImage.y = -barHeight*0.5;
+						buttonDefaultImage.y = buttonYOff;
 					end
 				elseif status == "over" then
 					buttonDefaultImage.alpha = 0.0;
@@ -161,7 +163,7 @@ M.newBar = function (params)
 			else
 				logger.log("Start animation for notifications");
 				buttonDefaultImage.y = -barHeight*0.8;
-				animationTransition = transition.to( buttonDefaultImage, { time=2000, y=-barHeight*0.5, iterations=-1, transition=easing.outElastic } );
+				animationTransition = transition.to( buttonDefaultImage, { time=2000, y=buttonYOff, iterations=-1, transition=easing.outElastic } );
 			end
 		end
 		
@@ -178,7 +180,7 @@ M.newBar = function (params)
 							animationTransition = nil;
 							
 							buttonDefaultImage.x = (i-0.5)*widthStep - barWidth*0.5;
-							buttonDefaultImage.y = -barHeight*0.5;
+							buttonDefaultImage.y = buttonYOff;
 						end
 					end
 				end
