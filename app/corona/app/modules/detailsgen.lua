@@ -14,6 +14,7 @@ local actionEnabled;
 local nextStatusCode;
 
 local mainTextColor = parameters.GRAPHICS.COLORS["main_text"];
+local notesTextColor = {(255/255),(255/255),(200/255)};
 
 -- Display objects
 local actionButtonOverColor;
@@ -1317,7 +1318,7 @@ M.newPage = function (params)
 			local restaurantNotes = orderRestaurant["notes"];
 			
 			local pickupNoteLineText = textmaker.newText(restaurantNotes,0,0,{"roboto-medium"}, parameters.GRAPHICS.FONT_BASE_SIZE, containerWidth - dropoffTimeText.x, 0, "right");
-			pickupNoteLineText:setFillColor((255/255),(255/255),(200/255));
+			pickupNoteLineText:setFillColor(notesTextColor[1],notesTextColor[2],notesTextColor[3]);
 			pickupNoteLineText.anchorX = pickupTimeText.anchorX;
 			pickupNoteLineText.anchorY = pickupTimeText.anchorY;
 			pickupNoteLineText.x = pickupTimeText.x;
@@ -1441,7 +1442,7 @@ M.newPage = function (params)
 			local addressNotes = orderDropoffAddress["notes"];
 			
 			local addressNoteLineText = textmaker.newText(addressNotes,0,0,{"roboto-medium"}, parameters.GRAPHICS.FONT_BASE_SIZE, (containerWidth - dropoffTimeText.x - 4), 0, "left");
-			addressNoteLineText:setFillColor((255/255),(255/255),(200/255));
+			addressNoteLineText:setFillColor(notesTextColor[1],notesTextColor[2],notesTextColor[3]);
 			addressNoteLineText.anchorX = dropoffTimeText.anchorX;
 			addressNoteLineText.anchorY = dropoffTimeText.anchorY;
 			addressNoteLineText.x = dropoffTimeText.x;
@@ -1456,7 +1457,7 @@ M.newPage = function (params)
 			local customerNotes = orderCustomer["notes"];
 			
 			local customerNoteLineText = textmaker.newText(customerNotes,0,0,{"roboto-medium"}, parameters.GRAPHICS.FONT_BASE_SIZE, (containerWidth - dropoffTimeText.x - 4), 0, "left");
-			customerNoteLineText:setFillColor((255/255),(255/255),(200/255));
+			customerNoteLineText:setFillColor(notesTextColor[1],notesTextColor[2],notesTextColor[3]);
 			customerNoteLineText.anchorX = dropoffTimeText.anchorX;
 			customerNoteLineText.anchorY = dropoffTimeText.anchorY;
 			customerNoteLineText.x = dropoffTimeText.x;
@@ -1495,7 +1496,7 @@ M.newPage = function (params)
 			local orderNotes = orderDescriptor["notes"];
 			
 			local notesHeaderText = textmaker.newText("Notes:",0,0,{"roboto-bold"}, fontSize*1.25);
-			notesHeaderText:setFillColor(mainTextColor[1],mainTextColor[2],mainTextColor[3]);
+			notesHeaderText:setFillColor(notesTextColor[1],notesTextColor[2],notesTextColor[3]);
 			notesHeaderText.anchorX = 0.0;
 			notesHeaderText.anchorY = 0.0;
 			notesHeaderText.x = 4;
@@ -1503,44 +1504,17 @@ M.newPage = function (params)
 			itemsGroup:insert(notesHeaderText);
 			yOffset = yOffset + notesHeaderText.height;
 			
-			local orderNoteLineText = textmaker.newText(orderNotes,0,0,{"roboto-thin-italic"}, parameters.GRAPHICS.FONT_BASE_SIZE*0.75,containerWidth-8,0,"left");
-			orderNoteLineText:setFillColor(mainTextColor[1],mainTextColor[2],mainTextColor[3]);
+			local orderNoteLineText = textmaker.newText(orderNotes,0,0,{"roboto-regular"}, parameters.GRAPHICS.FONT_BASE_SIZE,containerWidth-8,0,"left");
+			orderNoteLineText:setFillColor(notesTextColor[1],notesTextColor[2],notesTextColor[3]);
 			orderNoteLineText.anchorX = 0.0;
 			orderNoteLineText.anchorY = 0.0;
 			orderNoteLineText.x = 4;
 			orderNoteLineText.y = yOffset;
 			itemsGroup:insert(orderNoteLineText);
 			yOffset = yOffset + orderNoteLineText.height + 12;
-			
-			--[[
-			while string.len(orderNotes) > 54 do
-				local notesLine = string.sub( orderNotes, 0, 54 );
-				local remaining = string.sub( orderNotes, 55 );
-				
-				orderNotes = remaining;
-				
-				local orderNoteLineText = textmaker.newText(notesLine,0,0,{"roboto-thin-italic"}, parameters.GRAPHICS.FONT_BASE_SIZE*0.75);
-				orderNoteLineText:setFillColor(mainTextColor[1],mainTextColor[2],mainTextColor[3]);
-				orderNoteLineText.anchorX = 0.0;
-				orderNoteLineText.anchorY = 0.0;
-				orderNoteLineText.x = 4;
-				orderNoteLineText.y = yOffset;
-				itemsGroup:insert(orderNoteLineText);
-				yOffset = yOffset + orderNoteLineText.height*0.85;
-			end
-			
-			local orderNoteLineText = textmaker.newText(orderNotes,0,0,{"roboto-thin-italic"}, parameters.GRAPHICS.FONT_BASE_SIZE*0.75);
-			orderNoteLineText:setFillColor(mainTextColor[1],mainTextColor[2],mainTextColor[3]);
-			orderNoteLineText.anchorX = 0.0;
-			orderNoteLineText.anchorY = 0.0;
-			orderNoteLineText.x = 4;
-			orderNoteLineText.y = yOffset;
-			itemsGroup:insert(orderNoteLineText);
-			yOffset = yOffset + orderNoteLineText.height*0.85;
-			
-			yOffset = yOffset + 12;
-			--]]
 		end
+
+		yOffset = yOffset + 12;
 		
 		if orderItems ~= nil then
 			local orderMenus = orderItems["menus"];

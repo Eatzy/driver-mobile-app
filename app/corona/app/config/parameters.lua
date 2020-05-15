@@ -7,8 +7,8 @@ M.GENERAL = {};
 M.GENERAL.DEV = false;
 M.GENERAL.ADHOC = false;
 M.GENERAL.LOG_ENABLED = false; -- enable logs and console output both on simulator and devices
-M.GENERAL.VERSION = "1.7.2";
-M.GENERAL.BUILD = "107002";
+M.GENERAL.VERSION = "1.7.3";
+M.GENERAL.BUILD = "107003";
 
 -- Graphics
 M.GRAPHICS = {};
